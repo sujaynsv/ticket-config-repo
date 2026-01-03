@@ -79,3 +79,48 @@ logging:
   file:
     name: logs/ticket-service.log
     path: logs
+
+feign:
+  circuitbreaker:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      assignmentServiceClient:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+      
+      userServiceClient:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+  
+  retry:
+    instances:
+      assignmentServiceClient:
+        maxAttempts: 3
+        waitDuration: 1s
+      
+      userServiceClient:
+        maxAttempts: 3
+        waitDuration: 1s
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers
