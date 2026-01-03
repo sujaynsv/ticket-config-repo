@@ -38,8 +38,10 @@ services:
   auth-service:
     url: http://localhost:8081
 
-# Feign Client
+#Feign Configuration
 feign:
+  circuitbreaker:
+    enabled: true
   client:
     config:
       default:
@@ -67,28 +69,7 @@ rabbitmq:
     ticket-updated: ticket.updated
     comment-added: comment.added
 
-logging:
-  level:
-    com.ticket: DEBUG
-    com.ticket.service.EventPublisherService: DEBUG
-    com.ticket.client: DEBUG
-    org.springframework.amqp: DEBUG
-    org.springframework.cloud.openfeign: DEBUG
-    org.springframework.data.mongodb: INFO
-    feign: DEBUG
-  file:
-    name: logs/ticket-service.log
-    path: logs
-
-feign:
-  circuitbreaker:
-    enabled: true
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-
+# Circuit Breaker Configuration
 resilience4j:
   circuitbreaker:
     instances:
@@ -124,3 +105,16 @@ management:
     web:
       exposure:
         include: health,info,metrics,circuitbreakers
+
+logging:
+  level:
+    com.ticket: DEBUG
+    com.ticket.service.EventPublisherService: DEBUG
+    com.ticket.client: DEBUG
+    org.springframework.amqp: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+    org.springframework.data.mongodb: INFO
+    feign: DEBUG
+  file:
+    name: logs/ticket-service.log
+    path: logs

@@ -60,12 +60,7 @@ sla:
   
   breach-check-interval: 60
 
-logging:
-  level:
-    com.assignment: DEBUG
-    org.springframework.amqp: DEBUG
-
-# Enable Feign Circuit Breaker
+# Feign Configuration (assignment service uses RestTemplate, but keep this for consistency)
 feign:
   circuitbreaker:
     enabled: true
@@ -75,6 +70,7 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
 
+# Circuit Breaker Configuration
 resilience4j:
   circuitbreaker:
     instances:
@@ -117,3 +113,7 @@ management:
     health:
       show-details: always
 
+logging:
+  level:
+    com.assignment: DEBUG
+    org.springframework.amqp: DEBUG
