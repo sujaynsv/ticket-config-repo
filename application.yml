@@ -1,0 +1,40 @@
+# ========================================
+# COMMON CONFIGURATION FOR ALL SERVICES
+# ========================================
+
+# Eureka Client (Common for all services)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+# Management & Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,refresh,env
+  endpoint:
+    health:
+      show-details: always
+
+# Common Logging Pattern
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  level:
+    root: INFO
+
+# Jackson Configuration (JSON)
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false

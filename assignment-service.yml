@@ -1,0 +1,66 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: assignment-service
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/assignment_db
+    username: sujaynimmagadda
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+auth-service:
+  url: http://localhost:8081
+
+# Assignment Configuration
+assignment:
+  auto-assign:
+    enabled: false
+    strategy: LEAST_LOADED
+  max-tickets-per-agent: 10
+
+# SLA Configuration
+sla:
+  business-hours:
+    enabled: true
+    start-time: "09:00"
+    end-time: "18:00"
+    timezone: "Asia/Kolkata"
+  
+  rules:
+    CRITICAL:
+      response-time-minutes: 5
+      resolution-time-hours: 4
+    HIGH:
+      response-time-minutes: 60
+      resolution-time-hours: 8
+    MEDIUM:
+      response-time-minutes: 240
+      resolution-time-hours: 24
+    LOW:
+      response-time-minutes: 480
+      resolution-time-hours: 48
+  
+  breach-check-interval: 60
+
+logging:
+  level:
+    com.assignment: DEBUG
+    org.springframework.amqp: DEBUG
