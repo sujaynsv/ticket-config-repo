@@ -10,23 +10,23 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-          allowed-origins: 
-            - "http://localhost:4200"
-            - "http://localhost:3000"
-          allowed-methods:
+            allowedOrigins: 
+              - "http://localhost:4200"
+              - "http://localhost:3000"
+            allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
               - PATCH
               - OPTIONS
-          allowed-headers: 
-            - "*"
-          exposedHeaders:
-            - "Authorization"
-            - "Content-Type"
-          allow-credentials: false
-          max-age: 3600
+            allowedHeaders: 
+              - "*"
+            exposedHeaders:
+              - "Authorization"
+              - "Content-Type"
+            allowCredentials: false
+            maxAge: 3600
       
       routes:
         # PUBLIC ROUTES
@@ -61,6 +61,15 @@ spring:
           order: 4
         
         # PROTECTED USER ROUTES
+        - id: users-me
+          uri: lb://auth-service
+          predicates:
+            - Path=/users/me
+            - Method=GET,PUT
+          filters:
+            - AuthenticationFilter
+          order: 9
+        
         - id: users-agents
           uri: lb://auth-service
           predicates:
