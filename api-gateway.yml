@@ -20,8 +20,8 @@ spring:
               - DELETE
               - PATCH
               - OPTIONS
-
-          allowed-headers: "*"
+          allowed-headers: 
+            - "*"
           exposedHeaders:
             - "Authorization"
             - "Content-Type"
