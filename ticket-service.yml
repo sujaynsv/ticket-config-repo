@@ -118,3 +118,7 @@ logging:
   file:
     name: logs/ticket-service.log
     path: logs
+
+environment:
+  SPRING_CLOUD_CONFIG_ENABLED: "false"
+  SPRING_CLOUD_CONFIG_FAILFAST: "false"

@@ -279,3 +279,6 @@ management:
     web:
       exposure:
         include: health,info,gateway,refresh
+environment:
+  SPRING_CLOUD_CONFIG_ENABLED: "false"
+  SPRING_CLOUD_CONFIG_FAILFAST: "false"

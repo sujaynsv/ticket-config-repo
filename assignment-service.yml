@@ -117,3 +117,7 @@ logging:
   level:
     com.assignment: DEBUG
     org.springframework.amqp: DEBUG
+
+environment:
+  SPRING_CLOUD_CONFIG_ENABLED: "false"
+  SPRING_CLOUD_CONFIG_FAILFAST: "false"
