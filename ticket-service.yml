@@ -7,11 +7,13 @@ spring:
   
   data:
     mongodb:
-      uri: mongodb://localhost:27017/ticket_service_db
+      # Changed localhost to mongodb
+      uri: mongodb://mongodb:27017/ticket_service_db
       auto-index-creation: true
   
   rabbitmq:
-    host: localhost
+    # Changed localhost to rabbitmq
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -22,7 +24,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-# AWS S3 Configuration
+# AWS S3 Configuration (Remain same as they are external)
 aws:
   region: ap-south-1
   s3:
@@ -33,12 +35,13 @@ aws:
 
 # Service URLs
 services:
+  # Changed localhost to the service names from docker-compose
   assignment-service:
-    url: http://localhost:8083
+    url: http://assignment-service:8083
   auth-service:
-    url: http://localhost:8081
+    url: http://auth-service:8081
 
-#Feign Configuration
+# Feign Configuration
 feign:
   circuitbreaker:
     enabled: true
@@ -119,6 +122,8 @@ logging:
     name: logs/ticket-service.log
     path: logs
 
+# Important: This should generally be true for production/docker 
+# to ensure the service waits for the config server.
 environment:
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  SPRING_CLOUD_CONFIG_FAILFAST: "false"
+  SPRING_CLOUD_CONFIG_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_FAILFAST: "true"

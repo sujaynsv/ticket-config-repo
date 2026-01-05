@@ -6,7 +6,8 @@ spring:
     name: assignment-service
   
   datasource:
-    url: jdbc:postgresql://localhost:5432/assignment_db
+    # Changed localhost to postgres
+    url: jdbc:postgresql://postgres:5432/assignment_db
     username: sujaynimmagadda
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -21,13 +22,15 @@ spring:
         format_sql: true
   
   rabbitmq:
-    host: localhost
+    # Changed localhost to rabbitmq
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
 
+# Changed localhost to auth-service
 auth-service:
-  url: http://localhost:8081
+  url: http://auth-service:8081
 
 # Assignment Configuration
 assignment:
@@ -60,7 +63,7 @@ sla:
   
   breach-check-interval: 60
 
-# Feign Configuration (assignment service uses RestTemplate, but keep this for consistency)
+# Feign Configuration
 feign:
   circuitbreaker:
     enabled: true
@@ -118,6 +121,7 @@ logging:
     com.assignment: DEBUG
     org.springframework.amqp: DEBUG
 
+# Switched to true to ensure proper Docker boot sequence
 environment:
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  SPRING_CLOUD_CONFIG_FAILFAST: "false"
+  SPRING_CLOUD_CONFIG_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_FAILFAST: "true"

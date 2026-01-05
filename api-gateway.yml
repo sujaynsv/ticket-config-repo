@@ -25,7 +25,8 @@ spring:
             exposedHeaders:
               - "Authorization"
               - "Content-Type"
-            allowCredentials: false
+            # Set to true if your frontend needs to send cookies or auth headers
+            allowCredentials: true
             maxAge: 3600
       
       routes:
@@ -266,11 +267,13 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 
 jwt:
-  secret: your-super-secret-key-min-256-bits-change-this-in-production-environment
+  # Pulling secret from environment variable for security
+  secret: ${JWT_SECRET:your-super-secret-key-min-256-bits-change-this-in-production-environment}
   expiration: 3600000
 
 logging:
   level:
+    root: INFO
     com.gateway: DEBUG
     org.springframework.cloud.gateway: DEBUG
 
@@ -279,6 +282,8 @@ management:
     web:
       exposure:
         include: health,info,gateway,refresh
+
+# Configuration for Docker environment
 environment:
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  SPRING_CLOUD_CONFIG_FAILFAST: "false"
+  SPRING_CLOUD_CONFIG_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_FAILFAST: "true"

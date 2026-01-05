@@ -6,7 +6,8 @@ spring:
     name: notification-service
   
   datasource:
-    url: jdbc:postgresql://localhost:5432/notification_db
+    # Changed localhost to postgres
+    url: jdbc:postgresql://postgres:5432/notification_db
     username: sujaynimmagadda
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -21,7 +22,8 @@ spring:
         format_sql: true
   
   rabbitmq:
-    host: localhost
+    # Changed localhost to rabbitmq
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -29,8 +31,9 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: nsvsujay@gmail.com
-    password: ahcwmyoztibtyjqh
+    # Note: Using environment variables for sensitive data is best practice
+    username: ${MAIL_USERNAME:nsvsujay@gmail.com}
+    password: ${MAIL_PASSWORD:ahcwmyoztibtyjqh}
     properties:
       mail:
         smtp:
@@ -44,13 +47,14 @@ spring:
 
 # Service URLs
 services:
+  # Changed localhost to service names
   ticket-service:
-    url: http://localhost:8082
+    url: http://ticket-service:8082
   auth-service:
-    url: http://localhost:8081
+    url: http://auth-service:8081
 
 auth-service:
-  url: http://localhost:8081
+  url: http://auth-service:8081
 
 # Feign Configuration
 feign:
@@ -136,6 +140,7 @@ logging:
       max-file-size: 10MB
       max-history: 10
 
+# Enabled config and fail-fast to ensure it waits for the config server in Docker
 environment:
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  SPRING_CLOUD_CONFIG_FAILFAST: "false"
+  SPRING_CLOUD_CONFIG_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_FAILFAST: "true"

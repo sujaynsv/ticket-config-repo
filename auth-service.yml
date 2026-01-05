@@ -6,7 +6,8 @@ spring:
     name: auth-service
   
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticket_auth_db
+    # Changed localhost to postgres
+    url: jdbc:postgresql://postgres:5432/ticket_auth_db
     username: sujaynimmagadda
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -25,7 +26,8 @@ spring:
         format_sql: true
 
 jwt:
-  secret: your-super-secret-key-min-256-bits-change-this-in-production-environment
+  # In a real environment, move this to an environment variable in docker-compose
+  secret: ${JWT_SECRET:your-super-secret-key-min-256-bits-change-this-in-production-environment}
   expiration: 86400000
 
 logging:
@@ -33,6 +35,7 @@ logging:
     com.ticket: DEBUG
     org.springframework.web: DEBUG
 
+# Switched to true so the service properly waits for the Config Server
 environment:
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  SPRING_CLOUD_CONFIG_FAILFAST: "false"
+  SPRING_CLOUD_CONFIG_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_FAILFAST: "true"

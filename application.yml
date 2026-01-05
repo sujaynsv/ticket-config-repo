@@ -6,10 +6,12 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      # Changed localhost to eureka-server
+      defaultZone: http://eureka-server:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
   instance:
+    # Essential for Docker: use the container's IP/Hostname rather than 'localhost'
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30
     lease-expiration-duration-in-seconds: 90
@@ -19,7 +21,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,refresh,env
+        # Added 'gateway' for the API Gateway to function correctly
+        include: health,info,metrics,refresh,env,gateway
   endpoint:
     health:
       show-details: always
@@ -39,6 +42,9 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
 
+# Changed to true for Docker environments
+# This ensures that if the Config Server isn't ready, 
+# the microservices wait/retry instead of crashing immediately.
 environment:
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  SPRING_CLOUD_CONFIG_FAILFAST: "false"
+  SPRING_CLOUD_CONFIG_ENABLED: "true"
+  SPRING_CLOUD_CONFIG_FAILFAST: "true"
