@@ -71,6 +71,7 @@ rabbitmq:
     ticket-status-changed: ticket.status.changed
     ticket-updated: ticket.updated
     comment-added: comment.added
+    ticket-deleted: ticket.deleted
 
 # Circuit Breaker Configuration
 resilience4j:
